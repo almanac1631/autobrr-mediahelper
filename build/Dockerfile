@@ -4,13 +4,11 @@ FROM golang:1.22.2 AS build-stage
 
 WORKDIR /app
 
-COPY ../go.mod go.sum ./
+COPY . .
+
 RUN go mod download
 
-COPY *.go ./
-
-RUN CGO_ENABLED=1 go build -o /autobrr-mediahelper
-
+RUN CGO_ENABLED=1 go build -o /autobrr-mediahelper ./cmd/autobrrmediahelper/
 
 FROM gcr.io/distroless/base-debian11 AS build-release-stage
 
